@@ -1,10 +1,4 @@
-package com.example.StudentManagement;
-
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
+package com.example.StudentManagement.Model;
 
 
 public class Student {

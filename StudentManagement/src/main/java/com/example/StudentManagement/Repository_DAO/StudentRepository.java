@@ -1,6 +1,6 @@
-package com.example.StudentManagement;
+package com.example.StudentManagement.Repository_DAO;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.StudentManagement.Model.Student;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -9,7 +9,7 @@ import java.util.List;
 
 @Repository
 public class StudentRepository {
-    HashMap<Integer,Student>studentDb=new HashMap<>();
+    HashMap<Integer, Student>studentDb=new HashMap<>();
 
     public String addStudent(Student student){
         if(studentDb.containsKey(student.getId())){
@@ -28,5 +28,23 @@ public class StudentRepository {
             return null;
         }
         return studentDb.get(id);
+    }
+
+    public String updateAge(int id, int age) {
+        if(!studentDb.containsKey(id)){
+            return "Invalid Id ";
+        }
+        Student existingStudent = studentDb.get(id);
+        existingStudent.setAge(age);
+        studentDb.put(id,existingStudent);
+        return "age update succesfull";
+    }
+
+    public String deleteStudent(int id) {
+        if(!studentDb.containsKey(id)){
+            return "Invalid id";
+        }
+        studentDb.remove(id);
+        return "student delete succesfully";
     }
 }
