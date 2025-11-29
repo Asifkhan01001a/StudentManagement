@@ -19,12 +19,11 @@ public class TeacherRepository {
             throw new TeacherExistException("Id: "+ teacher.getId()+ " already exisits");
         }
         teachersDb.put(teacher.getId(),teacher);
-        log.info("Teacher with id: "+teacher.getId()+ " added");
         return "Teacher added successfully";
     }
 
     public Teacher getTeacherById(int id) {
-        if(!teachersDb.containsKey(teachersDb.get(id))){
+        if(!teachersDb.containsKey(id)){
             return null;
         }
         return teachersDb.get(id);

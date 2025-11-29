@@ -20,25 +20,23 @@ public class TeacherController {
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity addTeacher(@RequestBody Teacher teacher) {
         try{
-            log.info("Teacher input received: "+teacher);
             String response = teacherService.addTeacher(teacher);
             return new ResponseEntity<>(response, HttpStatus.CREATED);
         }
         catch (TeacherExistException e) {
-            log.error("Exception while adding teacher: "+e.getMessage());
             return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
         }
     }
 
     @GetMapping()
-    public Teacher getTeacherById(@RequestParam("id") int id){
-        return teacherService.getTeacherById(id);
+    public ResponseEntity getTeacherById(@RequestParam("id") int id){
+        return new ResponseEntity(teacherService.getTeacherById(id),HttpStatus.OK);
     }
 
     @PutMapping("/{id}/{salary}")
-    public String updateTeacher(@PathVariable("id") int id,
+    public ResponseEntity updateTeacher(@PathVariable("id") int id,
                                  @PathVariable("salary") int salary){
-        return teacherService.updateTeacher(id,salary);
+        return new ResponseEntity(teacherService.updateTeacher(id,salary),HttpStatus.OK);
     }
 
 }
