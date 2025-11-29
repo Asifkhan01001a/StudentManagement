@@ -1,5 +1,6 @@
 package com.example.StudentManagement.Repository_DAO;
 
+import com.example.StudentManagement.Exceptions.StudentException;
 import com.example.StudentManagement.Model.Student;
 import org.springframework.stereotype.Repository;
 
@@ -13,13 +14,14 @@ public class StudentRepository {
 
     public String addStudent(Student student){
         if(studentDb.containsKey(student.getId())){
-            return "Student Already Exist";
+            throw new StudentException("this student alraedy exist");
         }
         studentDb.put(student.getId(),student);
-        return "Student added Succesfully";
+        return "student added succesfully";
+
     }
 
-    public List<Student> addStudent() {
+    public List<Student> getAllStudentList() {
         return new ArrayList<>(studentDb.values());
     }
 
@@ -32,7 +34,7 @@ public class StudentRepository {
 
     public String updateAge(int id, int age) {
         if(!studentDb.containsKey(id)){
-            return "Invalid Id ";
+            throw new StudentException("id " + id + " invalid");
         }
         Student existingStudent = studentDb.get(id);
         existingStudent.setAge(age);
@@ -42,7 +44,7 @@ public class StudentRepository {
 
     public String deleteStudent(int id) {
         if(!studentDb.containsKey(id)){
-            return "Invalid id";
+            throw new StudentException("id " + id + " is not present in database ");
         }
         studentDb.remove(id);
         return "student delete succesfully";

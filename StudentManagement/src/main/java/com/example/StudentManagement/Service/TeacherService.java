@@ -1,5 +1,6 @@
 package com.example.StudentManagement.Service;
 
+import com.example.StudentManagement.Exceptions.TeacherExistException;
 import com.example.StudentManagement.Model.Teacher;
 import com.example.StudentManagement.Repository_DAO.TeacherRepository;
 
@@ -18,7 +19,11 @@ public class TeacherService {
     }
 
     public Teacher getTeacherById(int id) {
-        return teacherRepository.getTeacherById(id);
+        Teacher teacher = teacherRepository.getTeacherById(id);
+        if(teacher==null){
+            throw new TeacherExistException("teacher id : "+ id + " invalid");
+        }
+        return teacher;
     }
 
     public String updateTeacher(int id, int salary) {

@@ -30,8 +30,8 @@ public class TeacherRepository {
     }
 
     public String updateTeacher(int id, int salary) {
-        if(!teachersDb.containsKey(id)){
-            return "invalid id";
+        if(!teachersDb.containsKey(id)) {
+            throw new TeacherExistException("Id: "+ id+ " invalid ");
         }
         Teacher teacher = teachersDb.get(id);
         teacher.setSalary(salary);

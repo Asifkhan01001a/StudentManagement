@@ -1,5 +1,6 @@
 package com.example.StudentManagement.Service;
 
+import com.example.StudentManagement.Exceptions.StudentException;
 import com.example.StudentManagement.Model.Student;
 import com.example.StudentManagement.Repository_DAO.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +19,19 @@ public class StudentService {
         return studentRepository.addStudent(student);
     }
 
-    public List<Student> getAllStudent() {
-        return studentRepository.addStudent();
+    public List<Student> getAllStudentList() {
+        if(studentRepository.getAllStudentList().size()==0){
+            throw new StudentException("List is Empty Add Students ");
+        }
+        return studentRepository.getAllStudentList();
     }
 
     public Student getStudentById(int id) {
-        return studentRepository.getStudentById(id);
+        Student student=studentRepository.getStudentById(id);
+        if(student==null){
+            throw new StudentException("id " + id + " invalid");
+        }
+        return student;
     }
 
     public String updateAge(int id, int age) {

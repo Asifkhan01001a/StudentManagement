@@ -3,12 +3,15 @@ package com.example.StudentManagement.Controller;
 import com.example.StudentManagement.Model.Student;
 import com.example.StudentManagement.Service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/student")
+
 public class StudentController {
     @Autowired
     StudentService studentService;
@@ -20,42 +23,91 @@ public class StudentController {
 
     //to add students in hashmap
     @PostMapping
-    public String addStudent(@RequestBody Student student){
-        return studentService.addStudent(student);
+    public ResponseEntity addStudent(@RequestBody Student student){
+        try{
+            return new ResponseEntity(studentService.addStudent(student),HttpStatus.CREATED);
+        }
+        catch (Exception e){
+            return new ResponseEntity(e.getMessage(),HttpStatus.NOT_FOUND);
+        }
+
+
     }
 
     //to get all records in hashmap
-    @GetMapping("/all")
-    public List<Student> getAllStudent(){
-        return studentService.getAllStudent();
+    @GetMapping("/{id}")
+    public ResponseEntity getStudentById(@PathVariable("id") int id){
+        try{
+            Student student = studentService.getStudentById(id);
+            return new ResponseEntity(student, HttpStatus.OK);
+        }
+        catch (Exception e){
+            return  new ResponseEntity(e.getMessage(),HttpStatus.NOT_FOUND);
+        }
+
+
     }
 
-    @GetMapping("/{id}")
-    public Student getStudentById(@PathVariable("id") int id){
-        return studentService.getStudentById(id);
+    @GetMapping("/all")
+    public ResponseEntity getAllStudentList(){
+        try{
+            return new ResponseEntity(studentService.getAllStudentList(),HttpStatus.OK);
+        }
+        catch (Exception e){
+            return new ResponseEntity(e.getMessage(),HttpStatus.NOT_FOUND);
+        }
+
     }
 
 
     @GetMapping()
-    public Student getStudentByIdPath(@RequestParam("id") int id){
-        return studentService.getStudentById(id);
+    public ResponseEntity getStudentByIdPath(@RequestParam("id") int id){
+
+        try{
+            Student student = studentService.getStudentById(id);
+            return new ResponseEntity(student, HttpStatus.OK);
+        }
+        catch (Exception e){
+            return  new ResponseEntity(e.getMessage(),HttpStatus.NOT_FOUND);
+        }
+
     }
 
     @PutMapping("/id/{id}/age/{age}")
-    public String updateAge(@PathVariable("id") int id,
+    public ResponseEntity updateAge(@PathVariable("id") int id,
                             @PathVariable("age") int age){
-        return studentService.updateAge(id,age);
+        try{
+            return new ResponseEntity(studentService.updateAge(id,age),HttpStatus.OK);
+        }
+        catch (Exception e){
+            return new ResponseEntity(e.getMessage(),HttpStatus.NOT_FOUND);
+        }
+
+
     }
 
     @PutMapping
-    public String updateAgeUsingReqParam(@RequestParam("id") int id,
+    public ResponseEntity updateAgeUsingReqParam(@RequestParam("id") int id,
                                          @RequestParam("age") int age){
-        return studentService.updateAge(id,age);
+        try{
+            return new ResponseEntity(studentService.updateAge(id,age),HttpStatus.OK);
+        }
+        catch (Exception e){
+            return new ResponseEntity(e.getMessage(),HttpStatus.NOT_FOUND);
+        }
+
     }
 
     @DeleteMapping
-    public String deleteStudent(@RequestParam("id") int id){
-        return studentService.deleteStudent(id);
+    public ResponseEntity deleteStudent(@RequestParam("id") int id){
+        try{
+            return new ResponseEntity(studentService.deleteStudent(id),HttpStatus.OK);
+        }
+        catch (Exception e){
+            return new ResponseEntity(e.getMessage(),HttpStatus.NOT_FOUND);
+        }
+
+
     }
 
 

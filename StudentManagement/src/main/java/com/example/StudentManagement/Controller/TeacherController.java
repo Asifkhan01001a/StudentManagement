@@ -30,13 +30,25 @@ public class TeacherController {
 
     @GetMapping()
     public ResponseEntity getTeacherById(@RequestParam("id") int id){
-        return new ResponseEntity(teacherService.getTeacherById(id),HttpStatus.OK);
+       try{
+           return new ResponseEntity(teacherService.getTeacherById(id),HttpStatus.OK);
+       }
+       catch (TeacherExistException e){
+           return new ResponseEntity(e.getMessage(),HttpStatus.NOT_FOUND);
+       }
+
     }
 
     @PutMapping("/{id}/{salary}")
     public ResponseEntity updateTeacher(@PathVariable("id") int id,
                                  @PathVariable("salary") int salary){
-        return new ResponseEntity(teacherService.updateTeacher(id,salary),HttpStatus.OK);
+        try{
+            String response = teacherService.updateTeacher(id,salary);
+            return new ResponseEntity<>(response, HttpStatus.CREATED);
+        }
+        catch (TeacherExistException e) {
+            return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
+        }
     }
 
 }
