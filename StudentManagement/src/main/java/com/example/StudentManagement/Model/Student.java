@@ -17,6 +17,16 @@ public class Student {
         this.marks = marks;
     }
 
+    @Override
+    public String toString() {
+        return "Student{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", age=" + age +
+                ", marks=" + marks +
+                '}';
+    }
+
     public int getId() {
         return id;
     }
@@ -48,4 +58,6 @@ public class Student {
     public void setMarks(int marks) {
         this.marks = marks;
     }
+
+
 }

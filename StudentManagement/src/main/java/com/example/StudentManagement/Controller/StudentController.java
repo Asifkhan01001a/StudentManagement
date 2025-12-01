@@ -2,6 +2,8 @@ package com.example.StudentManagement.Controller;
 
 import com.example.StudentManagement.Model.Student;
 import com.example.StudentManagement.Service.StudentService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +18,9 @@ public class StudentController {
     @Autowired
     StudentService studentService;
 
+
+    Logger logger= LoggerFactory.getLogger(StudentController.class);
+
     @GetMapping("/Welcome")
     public String getWelcome(int id){
         return "Welcome";
@@ -25,6 +30,8 @@ public class StudentController {
     @PostMapping
     public ResponseEntity addStudent(@RequestBody Student student){
         try{
+            logger.warn("Student input recived : "+ student);
+//            logger.info("Student input recived : "+ student);
             return new ResponseEntity(studentService.addStudent(student),HttpStatus.CREATED);
         }
         catch (Exception e){
